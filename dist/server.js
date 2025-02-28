@@ -17,9 +17,16 @@ if (!process.env.PORT) {
     console.error("Please define PORT in your .env file");
     process.exit(1);
 }
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || "http://localhost:4200",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+};
 // Middleware
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)(corsOptions));
 // Define routes
 app.use("/users", usersRouter_1.default);
 app.use("/tasks", tasksRouter_1.default);
